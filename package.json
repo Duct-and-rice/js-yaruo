@@ -1,0 +1,26 @@
+{
+  "name": "js-yaruo",
+  "version": "1.0.0",
+  "description": "A library for Shift_JIS art",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duct-and-rice/js-yaruo.git"
+  },
+  "keywords": [
+    "2ch",
+    "asciiart",
+    "sjisart",
+    "shiftjisart",
+    "yaruo"
+  ],
+  "author": "Duct-and-rice",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/duct-and-rice/js-yaruo/issues"
+  },
+  "homepage": "https://github.com/duct-and-rice/js-yaruo#readme"
+}
