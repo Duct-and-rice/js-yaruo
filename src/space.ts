@@ -12,7 +12,7 @@ export const SPACES = Object.freeze([
 ])
 const HALF_SPACE:string = '\u0020'
 
-const DOTS_TO_SPACE = Object.freeze((() => {
+export const DOTS_TO_SPACE = Object.freeze((() => {
     const result = []
     for (const space of SPACES) {
         if (space.name === 'SPACE') {
