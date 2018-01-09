@@ -12,6 +12,12 @@ export const SPACES = Object.freeze([
 ])
 const HALF_SPACE:string = '\u0020'
 
+class SpacesSet{
+    a:number
+    h:number
+    adj:number
+}
+
 export const DOTS_TO_SPACE = Object.freeze((() => {
     const result = []
     for (const space of SPACES) {
@@ -23,7 +29,7 @@ export const DOTS_TO_SPACE = Object.freeze((() => {
     return result
 })())
 
-export function generateSpaceFromAH (a, h) {
+export function generateSpaceFromAH (a:number, h:number) {
     if (a === 0 && h === 1) {
         return HALF_SPACE
     }
@@ -34,7 +40,7 @@ export function generateSpaceFromAH (a, h) {
         (DOTS_TO_SPACE[11].str + HALF_SPACE).repeat(h)
 }
 
-export function adjustWithUnicode (adjuster) {
+export function adjustWithUnicode (adjuster:number) {
     if (adjuster >= 11) {
         throw new Error('Adjuster is ' + adjuster)
     }
@@ -50,7 +56,7 @@ export function adjustWithUnicode (adjuster) {
     return res
 }
 
-export function oneDotReduce (ah) {
+export function oneDotReduce (ah:SpacesSet):SpacesSet {
     ah = (() => {
         if (ah.a - 1 >= ah.h + 2) {
             return { a: ah.a - 1, h: ah.h + 2, adj: ah.adj }
@@ -66,11 +72,10 @@ export function oneDotReduce (ah) {
         ah.h--
         ah.adj += 5
     }
-    // ah = adjToAH(ah)
     return ah
 }
 
-export function adjToAH (ah) {
+export function adjToAH (ah:SpacesSet):SpacesSet {
     if (ah.adj === 5) {
         ah.h++
         ah.adj = 0
@@ -122,12 +127,12 @@ export default function widthSpace (sp) {
 
     if (mod !== 0 && mod !== 5) {
         while (a * 11 + h * 5 + adj !== sp) {
-            const ah = (oneDotReduce({ a, h, adj }))
+            const ah:SpacesSet = (oneDotReduce({ a, h, adj }))
             a = ah.a
             h = ah.h
             adj = ah.adj
         }
-        const ah = adjToAH({ a, h, adj })
+        const ah:SpacesSet = adjToAH({ a, h, adj })
         a = ah.a
         h = ah.h
         adj = ah.adj

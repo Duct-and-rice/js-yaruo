@@ -1,3 +1,9 @@
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('canvas')) :
+	typeof define === 'function' && define.amd ? define(['exports', 'canvas'], factory) :
+	(factory((global['js-yaruo'] = {}),global.canvas));
+}(this, (function (exports,canvas) { 'use strict';
+
 const SPACES = Object.freeze([
     { dots: 1, str: '\u200a', name: 'HAIR SPACE', unicode: true },
     { dots: 2, str: '\u2009', name: 'THIN SPACE', unicode: true },
@@ -65,7 +71,6 @@ function oneDotReduce(ah) {
         ah.h--;
         ah.adj += 5;
     }
-    // ah = adjToAH(ah)
     return ah;
 }
 function adjToAH(ah) {
@@ -131,5 +136,50 @@ function widthSpace(sp) {
     return generateSpaceFromAH(a, h) + adjustWithUnicode(adj);
 }
 
-export { SPACES, generateSpaceFromAH, adjustWithUnicode, oneDotReduce, adjToAH };
-export default widthSpace;
+const isNode = require('is-node');
+let canvasRulerInstance;
+const TEN_DOTS_SPACE = SPACES.filter(space => space.dots == 10)[0].str;
+const FIVE_DOTS_SPACE = SPACES.filter(space => space.dots == 5)[0].str;
+class CanvasRuler {
+    constructor() {
+        if (!canvasRulerInstance) {
+            if (isNode) {
+                canvas.registerFont('assets/Saitamaar.ttf', { family: 'Stmr' });
+            }
+            const ruler = canvas.createCanvas(0, 0);
+            this.ruler = ruler;
+            this.unlock();
+            canvasRulerInstance = this;
+        }
+        return canvasRulerInstance;
+    }
+    getWidth(str) {
+        if (this.locked) {
+            throw new Error('Locked');
+        }
+        else if (this.ruler.getContext) {
+            this.lock();
+            const context = this.ruler.getContext('2d');
+            context.font = '16px Stmr';
+            const metrics = context.measureText(str.replace(new RegExp(TEN_DOTS_SPACE, 'g'), FIVE_DOTS_SPACE.repeat(2)));
+            this.unlock();
+            return Math.round(metrics.width);
+        }
+    }
+    isLocked() {
+        return this.locked;
+    }
+    lock() {
+        this.locked = true;
+    }
+    unlock() {
+        this.locked = false;
+    }
+}
+
+exports.CanvasRuler = CanvasRuler;
+exports.widthSpace = widthSpace;
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));

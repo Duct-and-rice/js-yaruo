@@ -46,10 +46,10 @@
   },
   "homepage": "https://github.com/duct-and-rice/js-yaruo#readme",
   "dependencies": {
-    "canvas": "^2.0.0-alpha.9",
-    "is-node": "^1.0.2"
+    "canvas": "^2.0.0-alpha.9"
   },
   "devDependencies": {
+    "is-node": "^1.0.2",
     "@types/es6-promise": "^3.3.0",
     "@types/jest": "^22.0.1",
     "eslint": "^4.15.0",
