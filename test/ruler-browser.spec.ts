@@ -1,6 +1,5 @@
 import {CanvasRuler, canvasRulerInstance} from '../src/ruler'
 import {SPACES} from '../src/space'
-import {SPACES} from '../src/space'
 
 describe('Ruler in the browser', function () {
     describe('Width', function () {
