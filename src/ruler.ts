@@ -1,6 +1,6 @@
 import { createCanvas, registerFont } from 'canvas'
 import { SPACES } from './space'
-const isNode = require('is-node')
+import * as isNode from 'is-node'
 
 export let canvasRulerInstance: CanvasRuler
 const TEN_DOTS_SPACE:string=SPACES.filter(space=>space.dots==10)[0].str
